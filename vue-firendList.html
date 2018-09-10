@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app p{
+            margin: 0;
+            width: 580px;
+            padding: 10px;
+        }
+        #app ul{
+            margin: 0;
+            padding: 0;
+            border: 1px solid #000;
+            background: pink;
+            display: none;
+            width: 600px;
+        }
+        #app li{
+            font-size: 16px;
+            line-height: 30px;
+        }
+        #app h2{
+            width: 600px;
+            height: 50px;
+            background: #eeeeee;
+            font-size: 16px;
+            line-height: 50px;
+            text-align: center;
+            border: 1px solid #000;
+            margin: 0;
+        }
+        .open{
+            display: block;
+        }
+    </style>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-for="item,index in tab">
+            <h2 @click="changeopen(item)">{{item.title}}</h2>
+            <ul :style="isopen(item.open)">
+                <li 
+                v-for="option,m in item.list">
+                    <p v-for="con in option">
+                        {{con}}
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        
+        let data=[
+            {
+                title:"朋友",
+                list:[
+                    {username: '九华彩',message:'什么叫做人脉？人脉并不是你认识多少人，而是你有困难时，有多少人来帮助你。'},
+                    {username: '柯如意',message:'其实每个人都很清楚自己想要什么，但并不是谁都有勇气表达出来。渐渐才知道，心口如一，是一种何等的强大！'},
+                    {username: '紫玟丽',message:'孤独这两个字拆开看，有小孩，有水果，有走兽，有蚊蝇，足以撑起一个盛夏傍晚的巷子口，人味十足。表达自己很受伤、很伤感的说说'} 
+                ]
+            },
+            {
+                title:"家人",
+                list:[
+                    {username: '仁觅露',message:'真理和美女都是赤裸裸的。'},
+                    {username: '蛮春荷',message:'我们看错了这个世界，却说世界欺骗了我们。'},
+                    {username: '濮北辰',message:'我们人这一辈子不是别人的楷模，就是别人的借鉴。'}
+                ]
+            },
+            {
+                title:"同事",
+                list:[
+                    {username: '刘伟',message:'世上无难事，只要不要脸。'},
+                    {username: '莫涛',message:'心清如水即是佛，了无牵挂佛无边。'},
+                    {username: '童童',message:'不要和我比懒，我懒得和你比。'}
+                ]
+            }
+        ]
+        data.forEach((item)=>{item.open=false})
+        document.onselectstart= function(){
+            return false;
+        }
+        new Vue({
+            el:"#app",
+            data:{
+                tab:data
+            },
+            methods:{
+                changeopen(item){
+                    // item.open = !item.open
+                    if(item.open){
+						item.open = false;
+					}else{
+						data.forEach((option)=>{
+							option.open = false
+						})
+						item.open = true;
+					}
+                },
+                isopen(open){
+                    return {display:open?"block":"none"}
+                }
+            }
+        })
+    </script>
+</body>
+</html>
